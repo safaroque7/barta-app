@@ -239,7 +239,7 @@
 
                 <!-- Content -->
                 <div class="py-4 text-gray-700 font-normal">
-                    <textarea name="textarea" id="" cols="30" rows="10">{{ $post->content }}</textarea>
+                    <textarea name="content" id="" cols="30" rows="10">{{ $post->content }}</textarea>
                 </div>
                 <input type="submit" value="Update"
                     class="bg-gray-500 text-white px-2 py-1 hover:bg-gray-900 duration-300 cursor-pointer rounded-lg mb-2">

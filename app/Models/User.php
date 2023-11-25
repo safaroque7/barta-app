@@ -25,6 +25,12 @@ class User extends Authenticatable
         'password_confirmation',
     ];
 
+
+    public function posts()
+    {
+        return $this->hasMany(User::class, 'post_id', 'id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -181,8 +181,8 @@
     <main class="container max-w-2xl mx-auto space-y-8 mt-8 px-2 md:px-0 min-h-screen">
         <!-- Newsfeed -->
         <section id="newsfeed" class="space-y-6">
-            
-                
+
+
             <!-- Barta Card -->
             <article class="bg-white border-2 border-black rounded-lg shadow mx-auto max-w-none px-4 py-5 sm:px-6">
                 <!-- Barta Card Top -->
@@ -223,10 +223,16 @@
                                     class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                     role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                                     tabindex="-1">
-                                    <a href="{{ route('post.edit', $post->id) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                    <a href="{{ route('post.edit', $post->id) }}"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                         role="menuitem" tabindex="-1" id="user-menu-item-0">Edit</a>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                        role="menuitem" tabindex="-1" id="user-menu-item-1">Delete</a>
+                                    <form action="{{ route('post.destroy', $post->id) }}" method="post">
+                                        @csrf
+                                        <input class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full cursor-pointer text-left"
+                                            type="submit" value="Delete">
+
+                                    </form>
+
                                 </div>
                             </div>
                         </div>
@@ -241,7 +247,7 @@
                     </p>
                 </div>
 
-                
+
 
                 <!-- Date Created & View Stat -->
                 <div class="flex items-center gap-2 text-gray-500 text-xs my-2">
@@ -301,7 +307,7 @@
             </article>
             <!-- /Barta Card -->
 
-            
+
 
             <hr />
             <div class="flex flex-col space-y-6">

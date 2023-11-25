@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Flasher\Prime\FlasherInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,11 +17,10 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::join('users', 'posts.user_id', '=', 'users.id')
-        ->orderBy('id', 'desc')
-        ->select('posts.*', 'users.first_name', 'users.last_name', 'users.email')
-        ->get();
-
-        // dd($posts);
+            ->orderBy('id', 'desc')
+            ->select('posts.*', 'users.first_name', 'users.last_name', 'users.email')
+            ->get();
+       
 
         // $posts = Post::with('user')->select('posts.*', 'users.first_name')->get();
 
@@ -75,7 +75,7 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        return view('edit-post', compact('post'));        
+        return view('edit-post', compact('post'));
     }
 
     /**
@@ -85,12 +85,13 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id, Request $request, FlasherInterface $flasherInterface)
     {
         $post = Post::find($id);
         $post->content = $request->content;
+        sweetalert()->addSuccess('Your post has been updated.');
         $post->save();
-        return back();
+        return redirect()->route('post.show', $post->id);
     }
 
     /**
@@ -99,8 +100,11 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id, FlasherInterface $flasher)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->deleteOrFail();
+        sweetalert()->addSuccess('Your post has been deleted.');
+        return redirect('/');
     }
 }

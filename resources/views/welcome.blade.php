@@ -119,19 +119,19 @@
                                 class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                 role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                                 tabindex="-1">
-                                <a href="./profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                    role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+                                <a href="{{ route('profile.show', Auth::id()) }}"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
+                                    tabindex="-1" id="user-menu-item-0">Your Profile</a>
                                 <a href="./edit-profile.html"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
                                     tabindex="-1" id="user-menu-item-1">Edit Profile</a>
 
 
-                                <form action="{{ url('logout') }}" method="POST" class="cursor-pointer">
+                                <form action="{{ url('logout') }}" method="POST"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                     @csrf
-                                    <input type="submit" value="Sign Out">
+                                    <input type="submit" value="Sign Out" class="cursor-pointer">
                                 </form>
-
-
 
                             </div>
                         </div>
@@ -302,6 +302,9 @@
             @foreach ($posts as $post)
                 <!-- Barta Card -->
                 <article class="bg-white border-2 border-black rounded-lg shadow mx-auto max-w-none px-4 py-5 sm:px-6">
+
+
+
                     <!-- Barta Card Top -->
                     <header>
                         <div class="flex items-center justify-between">
@@ -312,10 +315,10 @@
                                         src="https://avatars.githubusercontent.com/u/61485238" alt="Al Nahian" />
                                 </div>
                                 <!-- /User Avatar -->
-
+                                
                                 <!-- User Info -->
                                 <div class="text-gray-900 flex flex-col min-w-0 flex-1">
-                                    <a href="profile.html" class="hover:underline font-semibold line-clamp-1">
+                                    <a href=" {{ route('profile.show', $post->id) }}" class="hover:underline font-semibold line-clamp-1">
                                         {{ $post->first_name }} {{ $post->last_name }}
                                     </a>
 
@@ -343,6 +346,7 @@
                                         </button>
                                     </div>
 
+
                                     @auth
 
                                         <!-- Dropdown menu -->
@@ -350,12 +354,20 @@
                                             class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                             role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                                             tabindex="-1">
-                                            <a href="#"
+                                            <a href="{{ route('post.edit', $post->id) }}"
                                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                 role="menuitem" tabindex="-1" id="user-menu-item-0">Edit</a>
-                                            <a href="#"
-                                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                role="menuitem" tabindex="-1" id="user-menu-item-1">Delete</a>
+
+
+                                            <form action="{{ route('post.destroy', $post->id) }}" method="post">
+                                                @csrf
+                                                <input
+                                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full cursor-pointer text-left"
+                                                    type="submit" value="Delete">
+                                            </form>
+
+
+
                                         </div>
                                     @endauth
                                 </div>
@@ -379,6 +391,11 @@
                         <span class="">•</span>
                         <span>450 views</span>
                     </div>
+
+
+
+
+
 
                     <!-- Barta Card Bottom -->
                     <footer class="border-t border-gray-200 pt-2">

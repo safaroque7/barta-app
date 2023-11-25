@@ -2,15 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Post;
+use App\Models\User;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
+
+    public function show($id)
+    {
+        $user = User::find($id);
+        // dd($user);
+        return view('profile', compact('user'));
+    }
     /**
      * Display the user's profile form.
      */
@@ -56,5 +65,17 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function store(Request $request)
+    {
+       $posts = Post::created([
+            'content' => $request->content,
+            'user_id' => Auth::user()->id,
+        ]);
+
+        dd($posts);
+
+        return back();
     }
 }
