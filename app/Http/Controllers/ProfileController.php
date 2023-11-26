@@ -2,24 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
 
     public function show($id)
     {
+        //to get user id
         $user = User::find($id);
+
+        // to join post with users
+        $posts = Post::join('users', 'posts.user_id', '=', 'users.id')
+            ->orderBy('id', 'desc')
+            ->select('posts.*', 'users.first_name', 'users.last_name', 'users.email')
+            ->where('user_id', '=', $id)
+            ->get();
+
+        // to get current users post count
+        $postsCount = Post::where('user_id', '=', $id)->count();
+        
         // dd($user);
-        return view('profile', compact('user'));
+        return view('profile', compact('user', 'posts', 'postsCount'));
     }
+
     /**
      * Display the user's profile form.
      */
@@ -69,12 +82,12 @@ class ProfileController extends Controller
 
     public function store(Request $request)
     {
-       $posts = Post::created([
+        $posts = Post::created([
             'content' => $request->content,
             'user_id' => Auth::user()->id,
         ]);
 
-        dd($posts);
+        // dd($posts);
 
         return back();
     }

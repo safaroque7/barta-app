@@ -20,7 +20,8 @@ class PostController extends Controller
             ->orderBy('id', 'desc')
             ->select('posts.*', 'users.first_name', 'users.last_name', 'users.email')
             ->get();
-       
+
+        // dd($posts);
 
         // $posts = Post::with('user')->select('posts.*', 'users.first_name')->get();
 
@@ -49,6 +50,7 @@ class PostController extends Controller
         $posts = Post::create([
             'content' => $request->content,
             'user_id' => Auth::user()->id,
+
         ]);
 
         return back();
@@ -62,8 +64,12 @@ class PostController extends Controller
      */
     public function show($id)
     {
+
+        $user = Auth::user();
+
         $post = Post::find($id);
-        return view('single-post', compact('post'));
+        return view('single-post', compact('post', 'user'));
+
     }
 
     /**

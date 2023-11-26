@@ -155,10 +155,10 @@
                     <div class="flex items-center px-4">
                         <div>
                             <div class="text-base font-medium text-gray-800">
-                                Ahmed Shamim Hasan Shaon
+                                {{ $post->first_name }}
                             </div>
                             <div class="text-sm font-medium text-gray-500">
-                                shaon@shamim.com
+                                {{ $post->first_name }}
                             </div>
                         </div>
                     </div>
@@ -182,7 +182,6 @@
         <!-- Newsfeed -->
         <section id="newsfeed" class="space-y-6">
 
-
             <!-- Barta Card -->
             <article class="bg-white border-2 border-black rounded-lg shadow mx-auto max-w-none px-4 py-5 sm:px-6">
                 <!-- Barta Card Top -->
@@ -191,15 +190,17 @@
                         <div class="flex items-center space-x-3">
                             <!-- User Info -->
                             <div class="text-gray-900 flex flex-col min-w-0 flex-1">
-                                <a href="profile.html" class="hover:underline font-semibold line-clamp-1">
-                                    Ahmed Shamim Hasan Shaon
+                                <a href="{{ route('profile.show', $post->user_id) }}" class="hover:underline font-semibold line-clamp-1">
+                                    {{ $user->first_name }} {{ $user->last_name }}
                                 </a>
 
                                 <a href="profile.html" class="hover:underline text-sm text-gray-500 line-clamp-1">
-                                    @me_shaon
+                                    {{ $user->email }}
                                 </a>
                             </div>
-                            <!-- /User Info -->
+
+                            {{-- {{ dd($post) }} --}}
+                            
                         </div>
 
                         <!-- Card Action Dropdown -->
@@ -228,7 +229,8 @@
                                         role="menuitem" tabindex="-1" id="user-menu-item-0">Edit</a>
                                     <form action="{{ route('post.destroy', $post->id) }}" method="post">
                                         @csrf
-                                        <input class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full cursor-pointer text-left"
+                                        <input
+                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full cursor-pointer text-left"
                                             type="submit" value="Delete">
 
                                     </form>
@@ -261,7 +263,8 @@
                 <hr class="my-6" />
 
                 <!-- Barta Create Comment Form -->
-                <form action="" method="POST">
+                <form action="{{ route('comment.store') }}" method="POST">
+                    @csrf
                     <!-- Create Comment Card Top -->
                     <div>
                         <div class="flex items-start /space-x-3/">
