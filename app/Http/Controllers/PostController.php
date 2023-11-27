@@ -65,10 +65,14 @@ class PostController extends Controller
     public function show($id)
     {
 
-        $user = Auth::user();
+        // dd($id);
+        // $user = Auth::user();
+        // Post::findOrFail($id)->with('user')->get();
 
-        $post = Post::find($id);
-        return view('single-post', compact('post', 'user'));
+        // $post = Post::find($id);
+        $post = Post::findOrFail($id)->with('user')->first();
+        // dd($post);
+        return view('single-post', compact('post'));
 
     }
 
