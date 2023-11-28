@@ -12,7 +12,7 @@ class Post extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id', 'first_name', 'last_name', 'email');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     protected $fillable = [

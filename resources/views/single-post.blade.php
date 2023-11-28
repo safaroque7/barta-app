@@ -191,11 +191,12 @@
                             <!-- User Info -->
                             <div class="text-gray-900 flex flex-col min-w-0 flex-1">
                                 <a href="{{ route('profile.show', $post->user_id) }}" class="hover:underline font-semibold line-clamp-1">
-                                    {{ $user->first_name }} {{ $user->last_name }}
+                                    {{-- {{ dd($post) }} --}}
+                                    {{ $post->user->first_name }} {{ $post->user->last_name }}
                                 </a>
 
                                 <a href="profile.html" class="hover:underline text-sm text-gray-500 line-clamp-1">
-                                    {{ $user->email }}
+                                    {{ $post->user->email }}
                                 </a>
                             </div>
 

@@ -316,17 +316,18 @@
                                 </div>
                                 <!-- /User Avatar -->
 
-                                <!-- User Info -->
-                                <div class="text-gray-900 flex flex-col min-w-0 flex-1">
-                                    <a href=" {{ route('profile.show', $post->user_id) }}"
-                                        class="hover:underline font-semibold line-clamp-1">
-                                        {{ $post->first_name }} {{ $post->last_name }}
-                                    </a>
+                                    <!-- User Info -->
+                                    <div class="text-gray-900 flex flex-col min-w-0 flex-1">
+                                        <a href=" {{ route('profile.show', $post->user_id) }}"
+                                            class="hover:underline font-semibold line-clamp-1">
+                                            {{ $post->user->first_name }} {{ $post->user->last_name }}
+                                        </a>
 
-                                    <a href="profile.html" class="hover:underline text-sm text-gray-500 line-clamp-1">
-                                        {{ $post->email }}
-                                    </a>
-                                    {{-- 
+                                        <a href="profile.html"
+                                            class="hover:underline text-sm text-gray-500 line-clamp-1">
+                                            {{ $post->user->email }}
+                                        </a>
+                                        {{-- 
                                     <p> ID: {{ $post->id }} </p>
                                     <p> uuid: {{ $post->uuid }} </p>
                                     <p> content: {{ $post->content }} </p>
@@ -336,8 +337,9 @@
                                     <p> last name: {{ $post->last_name }} </p>
                                     <p> email: {{ $post->email }} </p>
                                     <p> user id: {{ $post->user_id }} </p> --}}
-                                </div>
-                                <!-- /User Info -->
+                                    </div>
+                                    <!-- /User Info -->
+                                
                             </div>
                             @if (Auth::user()->id === $post->user_id)
                                 <!-- Card Action Dropdown -->

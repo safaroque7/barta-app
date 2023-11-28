@@ -23,7 +23,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [PostController::class, 'index']);
-    Route::get('/single-posts/{id}', [PostController::class, 'show'])->name('post.show');
+    Route::get('/single-post/{id}', [PostController::class, 'show'])->name('post.show');
     Route::get('/edit-post/{id}', [PostController::class, 'edit'])->name('post.edit');
     Route::post('/update-post/{id}', [PostController::class, 'update'])->name('post.update');
     Route::post('/destroy-post/{id}', [PostController::class, 'destroy'])->name('post.destroy');

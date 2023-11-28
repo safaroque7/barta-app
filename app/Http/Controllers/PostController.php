@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Flasher\Prime\FlasherInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,10 +17,17 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::join('users', 'posts.user_id', '=', 'users.id')
-            ->orderBy('id', 'desc')
-            ->select('posts.*', 'users.first_name', 'users.last_name', 'users.email')
-            ->get();
+
+        // $users = User::with('post')->get();
+        // dd($users);
+
+        $posts = Post::with('user')->orderBy('id', 'desc')->get();
+        // dd($posts);
+
+        // $posts = Post::join('users', 'posts.user_id', '=', 'users.id')
+        //     ->orderBy('id', 'desc')
+        //     ->select('posts.*', 'users.first_name', 'users.last_name', 'users.email')
+        //     ->get();
 
         // dd($posts);
 
@@ -64,14 +72,10 @@ class PostController extends Controller
      */
     public function show($id)
     {
+        $user = Post::with('user')->first();
+        // dd($user);
 
-        // dd($id);
-        // $user = Auth::user();
-        // Post::findOrFail($id)->with('user')->get();
-
-        // $post = Post::find($id);
         $post = Post::findOrFail($id)->with('user')->first();
-        // dd($post);
         return view('single-post', compact('post'));
 
     }
