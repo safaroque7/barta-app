@@ -73,11 +73,13 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $user = Post::with('user')->first();
+        $posts = Post::with('user')->orderBy('id', 'desc')->first();
+
+        // $user = Post::with('user')->first();
         // dd($user);
 
-        $post = Post::findOrFail($id)->with('user')->first();
-        return view('single-post', compact('post'));
+        // $post = Post::findOrFail($id)->with('user')->first();
+        return view('single-post', compact('posts'));
 
     }
 

@@ -152,16 +152,22 @@
             <!-- Mobile menu, show/hide based on menu state. -->
             <div x-show="mobileMenuOpen" class="sm:hidden" id="mobile-menu">
                 <div class="border-t border-gray-200 pt-4 pb-3">
-                    <div class="flex items-center px-4">
-                        <div>
-                            <div class="text-base font-medium text-gray-800">
-                                {{ $post->first_name }}
+
+
+
+
+                            <div class="flex items-center px-4">
+                                <div>
+                                    <div class="text-base font-medium text-gray-800">
+                                        {{ $posts->user->first_name }}
+                                    </div>
+                                    <div class="text-sm font-medium text-gray-500">
+                                        {{ $posts->user->first_name }}
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-sm font-medium text-gray-500">
-                                {{ $post->first_name }}
-                            </div>
-                        </div>
-                    </div>
+
+
                     <div class="mt-3 space-y-1">
                         <a href="./profile.html"
                             class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800">Your
@@ -188,20 +194,23 @@
                 <header>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-3">
-                            <!-- User Info -->
-                            <div class="text-gray-900 flex flex-col min-w-0 flex-1">
-                                <a href="{{ route('profile.show', $post->user_id) }}" class="hover:underline font-semibold line-clamp-1">
-                                    {{-- {{ dd($post) }} --}}
-                                    {{ $post->user->first_name }} {{ $post->user->last_name }}
-                                </a>
 
-                                <a href="profile.html" class="hover:underline text-sm text-gray-500 line-clamp-1">
-                                    {{ $post->user->email }}
-                                </a>
-                            </div>
+                            
+                                <!-- User Info -->
+                                <div class="text-gray-900 flex flex-col min-w-0 flex-1">
+                                    <a href="{{ route('profile.show', $posts->user_id) }}"
+                                        class="hover:underline font-semibold line-clamp-1">
+                                        {{ $posts->user->first_name }} {{ $posts->user->last_name }}
+                                    </a>
+
+                                    <a href="profile.html" class="hover:underline text-sm text-gray-500 line-clamp-1">
+                                        {{ $posts->user->email }}
+                                    </a>
+                                </div>
+                            
 
                             {{-- {{ dd($post) }} --}}
-                            
+
                         </div>
 
                         <!-- Card Action Dropdown -->
@@ -225,10 +234,10 @@
                                     class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                     role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                                     tabindex="-1">
-                                    <a href="{{ route('post.edit', $post->id) }}"
+                                    <a href="{{ route('post.edit', $posts->id) }}"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                         role="menuitem" tabindex="-1" id="user-menu-item-0">Edit</a>
-                                    <form action="{{ route('post.destroy', $post->id) }}" method="post">
+                                    <form action="{{ route('post.destroy', $posts->id) }}" method="post">
                                         @csrf
                                         <input
                                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full cursor-pointer text-left"
@@ -246,15 +255,14 @@
                 <!-- Content -->
                 <div class="py-4 text-gray-700 font-normal">
                     <p>
-                        {{ $post->content }}
+                        {{ $posts->content }}
                     </p>
                 </div>
 
 
-
                 <!-- Date Created & View Stat -->
                 <div class="flex items-center gap-2 text-gray-500 text-xs my-2">
-                    <span class="">6 minutes ago</span>
+                    <span class="">6 minutes ago 12000000</span>
                     <span class="">•</span>
                     <span>3 comments</span>
                     <span class="">•</span>
