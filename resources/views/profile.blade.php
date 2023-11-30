@@ -203,7 +203,7 @@
 
                 <!-- Total Comments Count -->
                 <div class="flex flex-col justify-center items-center">
-                    <h4 class="sm:text-xl font-bold">14</h4>
+                    <h4 class="sm:text-xl font-bold"> {{ $commentCount }} </h4>
                     <p class="text-gray-600">Comments</p>
                 </div>
             </div>

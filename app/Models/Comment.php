@@ -14,4 +14,9 @@ class Comment extends Model
         'post_id',
         'user_id',
     ];
+
+    public function user(){
+        // return self::belongsTo(User::class, 'user_id', 'id'); both are same
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

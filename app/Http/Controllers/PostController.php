@@ -73,13 +73,12 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        // dd($id);
-        $posts = Post::with('user')->where('id', $id)->orderBy('id', 'desc')->first();
-        // dd($posts);
+        // it is called eager loading
+        // return $posts = Post::with('user', 'comments')->where('id', $id)->orderBy('id', 'desc')->first();
+        // Abvoe return means show data json base
 
-        // $user = Post::with('user')->first();
-        // dd($user);
-
+        $posts = Post::with('user', 'comments.user')->where('id', $id)->orderBy('id', 'desc')->first();
+                
         // $post = Post::findOrFail($id)->with('user')->first();
         return view('single-post', compact('posts'));
 
