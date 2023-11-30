@@ -73,7 +73,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $posts = Post::with('user')->orderBy('id', 'desc')->first();
+        // dd($id);
+        $posts = Post::with('user')->where('id', $id)->orderBy('id', 'desc')->first();
+        // dd($posts);
 
         // $user = Post::with('user')->first();
         // dd($user);
@@ -102,11 +104,11 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request, FlasherInterface $flasher)
+    public function update($id, Request $request)
     {
         $post = Post::find($id);
         $post->content = $request->content;
-        sweetalert()->addSuccess('Your post has been updated.');
+        // sweetalert()->addSuccess('Your post has been updated.');
         $post->save();
         return redirect()->route('post.show', $post->id);
     }
@@ -117,11 +119,11 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, FlasherInterface $flasher)
+    public function destroy($id)
     {
         $post = Post::findOrFail($id);
         $post->deleteOrFail();
-        sweetalert()->addSuccess('Your post has been deleted.');
+        // sweetalert()->addSuccess('Your post has been deleted.');
         return redirect('/');
     }
 }
