@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
-use Flasher\Prime\FlasherInterface;
 use Illuminate\Http\Request;
+use Flasher\Prime\FlasherInterface;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -99,7 +100,7 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request, FlasherInterface $flasherInterface)
+    public function update($id, Request $request, FlasherInterface $flasher)
     {
         $post = Post::find($id);
         $post->content = $request->content;
