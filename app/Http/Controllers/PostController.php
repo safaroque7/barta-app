@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Flasher\Prime\FlasherInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -56,6 +57,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $picture = $request->file('picture');
+        $path = Storage::putFile('public', $picture);
+        dd($path);
+
         $posts = Post::create([
             'content' => $request->content,
             'user_id' => Auth::user()->id,

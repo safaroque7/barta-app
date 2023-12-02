@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
@@ -22,6 +23,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+
+    // $users = DB::users()->get();
+
     Route::get('/', [PostController::class, 'index']);
     Route::get('/single-post/{id}', [PostController::class, 'show'])->name('post.show');
     Route::get('/edit-post/{id}', [PostController::class, 'edit'])->name('post.edit');
