@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Flasher\Prime\FlasherInterface;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -57,12 +56,19 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $picture = $request->file('picture');
-        $path = Storage::putFile('public', $picture);
+        $file = $request->file('picture');
+        $fileName = time() . '_' . $file->getClientOriginalname();
+        $file->move(public_path('uploads'), $fileName);
+
+        if ($file) {
+            //your upload code here
+            $path = Storage::putFile('public', $file);
+        }
         dd($path);
 
         $posts = Post::create([
             'content' => $request->content,
+            'picture' => $path,
             'user_id' => Auth::user()->id,
 
         ]);
@@ -83,7 +89,7 @@ class PostController extends Controller
         // Abvoe return means show data json base
 
         $posts = Post::with('user', 'comments.user')->where('id', $id)->orderBy('id', 'desc')->first();
-                
+
         // $post = Post::findOrFail($id)->with('user')->first();
         return view('single-post', compact('posts'));
 
