@@ -254,6 +254,7 @@
 
                 <!-- Content -->
                 <div class="py-4 text-gray-700 font-normal">
+                    <img src="{{ asset('uploads/'. $posts->picture) }}" alt="">
                     <p>
                         {{ $posts->content }}
                     </p>

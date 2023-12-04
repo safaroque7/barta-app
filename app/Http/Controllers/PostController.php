@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\User;
+use Flasher\Prime\FlasherInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -56,22 +57,24 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $file = $request->file('picture');
-        $fileName = time() . '_' . $file->getClientOriginalname();
-        $file->move(public_path('uploads'), $fileName);
 
-        if ($file) {
-            //your upload code here
-            $path = Storage::putFile('public', $file);
-        }
-        dd($path);
+        // $fileName = time() . '.' . $request->picture->extension();
+        // // $request->picture->storeAs('images/', $fileName);
+        // $request->picture->store('images/', $fileName);
+
+        // $file->move(public_path('uploads'), $fileName);
+
+        $file = $request->file('picture');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('uploads'), $fileName);
 
         $posts = Post::create([
             'content' => $request->content,
-            'picture' => $path,
+            'picture' => $fileName,
             'user_id' => Auth::user()->id,
-
         ]);
+
+        // dd($path);
 
         return back();
     }
@@ -114,11 +117,23 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update($id, Request $request, FlasherInterface $flasherInterface)
     {
+        $oldPicture = Post::find($id);
+        $fileName = $oldPicture->picture;
+
+        if ($request->picture) {
+            // unlink($request->picture);
+            unlink(public_path('uploads/'. $fileName));
+            $file = $request->file('picture');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads'), $fileName);
+        }
+
         $post = Post::find($id);
         $post->content = $request->content;
-        // sweetalert()->addSuccess('Your post has been updated.');
+        $post->picture = $fileName;
+        sweetalert()->addSuccess('Your post has been updated.');
         $post->save();
         return redirect()->route('post.show', $post->id);
     }
