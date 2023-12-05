@@ -124,7 +124,7 @@ class PostController extends Controller
 
         if ($request->picture) {
             // unlink($request->picture);
-            unlink(public_path('uploads/'. $fileName));
+            unlink(public_path('uploads/' . $fileName));
             $file = $request->file('picture');
             $fileName = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads'), $fileName);
@@ -150,5 +150,21 @@ class PostController extends Controller
         $post->deleteOrFail();
         // sweetalert()->addSuccess('Your post has been deleted.');
         return redirect('/');
+    }
+
+    public function search(Request $request)
+    {
+        $searchItem = $request->search;
+        $searchResults = User::where('first_name', 'like', '%' . $searchItem . '%')
+            ->orWhere('last_name', 'like', '%' . $searchItem . '%')
+            ->orWhere('email', 'like', '%' . $searchItem . '%')
+            ->get();
+        // $posts = Post::with('user')->orderBy('id', 'desc')->get();
+
+        // return $searchResults;
+
+        return view('users', compact('searchResults'));
+
+        // $searchItem = $request->search;
     }
 }
