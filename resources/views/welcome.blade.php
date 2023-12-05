@@ -20,6 +20,12 @@
     </style>
 </head>
 
+
+{{-- <form action="{{ route('profile.update', Auth::user()) }}" method="post">
+    @csrf
+<input type="submit" value="submit">
+</form> --}}
+
 <body class="bg-gray-100">
     <header>
         <!-- Navigation -->
@@ -123,7 +129,7 @@
                                 <a href="{{ route('profile.show', Auth::id()) }}"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
                                     tabindex="-1" id="user-menu-item-0">Your Profile</a>
-                                <a href="./edit-profile.html"
+                                <a href="{{ route('profile.edit', Auth::id()) }}"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
                                     tabindex="-1" id="user-menu-item-1">Edit Profile</a>
 

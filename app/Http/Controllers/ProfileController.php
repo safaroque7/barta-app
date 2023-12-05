@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Comment;
-use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
@@ -32,7 +31,7 @@ class ProfileController extends Controller
 
         // for comments count
         $commentCount = Comment::where('user_id', '=', $id)->count();
-        
+
         // dd($user);
         return view('profile', compact('user', 'posts', 'postsCount', 'commentCount'));
     }
@@ -42,25 +41,44 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $user = Auth::user();
+        return view('edit-profile', compact('user'));
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update($id)
     {
-        $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+        return 'hi';
 
-        $request->user()->save();
+        // $user = Auth::user();
+        // $request = $this->validate(request(), [
+        //     'first_name' =>'required|string|max:255',
+        //     'last_name' =>'required|string|max:255',
+        //     'email' =>'required|string|email|max:255|unique:users,email,'. $user->id,
+        //     'password' => '[passwords]|password',
+        // ]);
+        // if ($request['password']!= null) {
+        //     $request['password'] = Hash::make($request['password']);
+        // } else {
+        //     unset($request['password']);
+        // }
+        // $user->update($request);
+        // return redirect()->route('profile.show', $user->id);
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        // $request->first_name;
+
+        // $request->user()->fill($request->validated());
+
+        // if ($request->user()->isDirty('email')) {
+        //     $request->user()->email_verified_at = null;
+        // }
+
+        // $request->user()->save();
+
+        // return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**
@@ -94,5 +112,10 @@ class ProfileController extends Controller
         // dd($posts);
 
         return back();
+    }
+
+    public function profileUpdate()
+    {
+        return 'hi';
     }
 }

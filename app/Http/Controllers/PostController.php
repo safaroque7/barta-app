@@ -64,9 +64,12 @@ class PostController extends Controller
 
         // $file->move(public_path('uploads'), $fileName);
 
+        $fileName = '';
         $file = $request->file('picture');
-        $fileName = time() . '_' . $file->getClientOriginalName();
-        $file->move(public_path('uploads'), $fileName);
+        if ($file) {
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads'), $fileName);
+        }
 
         $posts = Post::create([
             'content' => $request->content,
