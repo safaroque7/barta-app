@@ -41,23 +41,39 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        $user = Auth::user();
-        return view('edit-profile', compact('user'));
+        return view('edit-profile');
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update($id)
+    public function update(Request $request)
     {
 
-        return 'hi';
+        $file = $request->file('avatar');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('uploads/profile', $fileName));
 
-        // $user = Auth::user();
+        $user = Auth::user();
+        // dd($user);
+        
+        
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $user->avatar = $fileName;
+        $user->bio = $request->bio;
+        $user->password = $request->password;
+
+        $user->save();
+        return back();
+
+        // return $data;
+
         // $request = $this->validate(request(), [
         //     'first_name' =>'required|string|max:255',
         //     'last_name' =>'required|string|max:255',
-        //     'email' =>'required|string|email|max:255|unique:users,email,'. $user->id,
+        //     'email' =>'required|string|email|max:255|unique:users,email',
         //     'password' => '[passwords]|password',
         // ]);
         // if ($request['password']!= null) {

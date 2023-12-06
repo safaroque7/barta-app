@@ -182,10 +182,11 @@
     <main class="container max-w-xl mx-auto space-y-8 mt-8 px-2 md:px-0 min-h-screen">
         <!-- Profile Edit Form -->
 
-        <form actiom="{{ route('profile.update', Auth::user()->id) }}" method="post" enctype="multipart/form-data">
+        <form actiom="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
-
-            {{-- <div class="space-y-12">
+            @method('PUT')
+            
+            <div class="space-y-12">
                 <div class="border-b border-gray-900/10 pb-12">
                     <h2 class="text-xl font-semibold leading-7 text-gray-900">
                         Edit Profile
@@ -218,8 +219,8 @@
                                 <label for="first-name"
                                     class="block text-sm font-medium leading-6 text-gray-900">First name</label>
                                 <div class="mt-2">
-                                    <input type="text" name="first-name" id="first-name"
-                                        autocomplete="given-name" value="{{ $user->first_name }}"
+                                    <input type="text" name="first_name" id="first-name"
+                                        autocomplete="given-name" value="{{ auth()->user()->first_name }}"
                                         class="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" />
                                 </div>
                             </div>
@@ -228,8 +229,8 @@
                                 <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Last
                                     name</label>
                                 <div class="mt-2">
-                                    <input type="text" name="last-name" id="last-name"
-                                        value="{{ $user->last_name }}" autocomplete="family-name"
+                                    <input type="text" name="last_name" id="last-name"
+                                        value="{{ auth()->user()->last_name }}" autocomplete="family-name"
                                         class="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" />
                                 </div>
                             </div>
@@ -239,7 +240,7 @@
                                     address</label>
                                 <div class="mt-2">
                                     <input id="email" name="email" type="email" autocomplete="email"
-                                        value="{{ $user->email }}"
+                                        value="{{ auth()->user()->email }}"
                                         class="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" />
                                 </div>
                             </div>
@@ -261,8 +262,7 @@
                                 class="block text-sm font-medium leading-6 text-gray-900">Bio</label>
                             <div class="mt-2">
                                 <textarea id="bio" name="bio" rows="3"
-                                    class="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6">
-Less Talk, More Code 💻</textarea>
+                                    class="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6">{{ auth()->user()->bio }}</textarea>
                             </div>
                             <p class="mt-3 text-sm leading-6 text-gray-600">
                                 Write a few sentences about yourself.
@@ -270,7 +270,7 @@ Less Talk, More Code 💻</textarea>
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
 
             <div class="mt-6 flex items-center justify-end gap-x-6">
                 <button type="reset" class="text-sm font-semibold leading-6 text-gray-900">

@@ -1,11 +1,10 @@
 <?php
 
-use App\Models\Post;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Post;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,18 +31,26 @@ Route::middleware('auth')->group(function () {
     Route::post('/update-post/{id}', [PostController::class, 'update'])->name('post.update');
     Route::post('/destroy-post/{id}', [PostController::class, 'destroy'])->name('post.destroy');
 
-
     Route::get('/user/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
-    Route::get('/user/edit-profile/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::post('/user/update-profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
-    Route::post('/user/update-profile/{id}', [ProfileController::class, 'profileUpdate'])->name('profile.update');
+    Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profile/edit', [ProfileController::class, 'update'])->name('profile.update');
+
+    // Route::post('/profile/{id}', [ProfileController::class, 'update'])->name('update');
+
     Route::delete('/user/destroy-profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile/', [PostController::class, 'store'])->name('post.store');
 
-    // for comments 
+    // for comments
     Route::post('/comments/', [CommentController::class, 'store'])->name('comment.store');
 
     Route::post('/search/', [PostController::class, 'search'])->name('post.search');
+
+    //Route::get('/profile');
+    //Route::get('/profile/edit');
+    //Route::post('/profile/edit');
+
+    //Route::match(['POST', 'GET'], profile/edit);
+
 });
 
 require __DIR__ . '/auth.php';
